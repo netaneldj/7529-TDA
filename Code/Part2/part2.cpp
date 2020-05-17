@@ -157,8 +157,7 @@ void processC(string path) {
             counterMax++;
     }
 
-    if((counterMax > (int) values.size/2) ||
-        (counterMax == (int) values.size/2 && max == tiebrakerVote)) {
+    if(counterMax > (int) values.size/2) {
         cout << MSJ_ACCEPT_LOT << MSJ_LOT_VOLUME << max << endl;
     }
     else
