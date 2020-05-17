@@ -10,7 +10,8 @@ using namespace std;
 #define QUANT_ARGS 3
 #define MSJ_BAD_ARGS "Ha ingresado argumentos invalidos"
 #define MSJ_BAD_ARCHIVE "El archivo contiene información no válida"
-#define MSJ_ACCEPT_LOT "Aceptar lote"
+#define MSJ_ACCEPT_LOT "Aceptar lote."
+#define MSJ_LOT_VOLUME " El volumen del lote es: "
 #define MSJ_REJECT_LOT "Rechazar lote"
 #define INDEX_TYPE_PROCESS 1
 #define INDEX_LOT_PATH 2
@@ -25,10 +26,15 @@ typedef struct vector {
     size_t maxSize = MAX_CANT;
 } vector_t;
 
+typedef struct pair {
+    int first;
+    int second;
+} pair_t;
+
 int compare(const void * a, const void * b);
 void processA(string path);
 void processB(string path);
-int majorityElement();
+int majorityElement(vector_t &vector, int &tiebrakerVote);
 void processC(string path);
 void readLotFile(char* path, bool &success);
 
@@ -78,18 +84,18 @@ int main(int argc, char *argv[]) {
 
 void processA(string path) {
     size_t quantityPiecesLot = values.size;
-    size_t quantityElementsSameVolume = 0;
+    size_t counterElementsSameVolume = 1;
 
     for(size_t i = 0; i < quantityPiecesLot; i++){
         for(size_t j = i + 1; j < quantityPiecesLot; j++) {
             if(values.vector[i] == values.vector[j])
-                quantityElementsSameVolume++;
+                counterElementsSameVolume++;
         }
-        if(quantityElementsSameVolume >= (int) quantityPiecesLot/2) {
-            cout << MSJ_ACCEPT_LOT << endl;
+        if(counterElementsSameVolume > (int) quantityPiecesLot/2) {
+            cout << MSJ_ACCEPT_LOT << MSJ_LOT_VOLUME << values.vector[i] << endl;
             return;
         }
-        else quantityElementsSameVolume = 0;
+        else counterElementsSameVolume = 1;
     }
 
     cout << MSJ_REJECT_LOT << endl;
@@ -101,53 +107,60 @@ int compare (const void * a, const void * b)
 }
 
 void processB(string path) {
-    qsort(values.vector, values.size, sizeof(int), compare);
+    qsort(values.vector, values.size, sizeof(int), compare); //Ordena elementos
 
     size_t mayoritaryCount = 0;
-    size_t i = (int)values.size/2;
-    while(values.vector[i] == values.vector[(int)values.size/2]){
+    size_t i = (int) values.size/2;
+    while(values.vector[i] == values.vector[(int) values.size/2]){
         mayoritaryCount++;
         i++;
     }
-    i = (int)values.size/2;
-    while(values.vector[i] == values.vector[(int)values.size/2 - 1]){
+    i = (int) values.size / 2;
+    while(values.vector[i] == values.vector[(int) values.size/2 - 1]){
         mayoritaryCount++;
         i--;
     }
     
-    if(mayoritaryCount > (int) values.size/2)
-        cout << MSJ_ACCEPT_LOT << endl;
+    if(mayoritaryCount > (int) values.size / 2)
+        cout << MSJ_ACCEPT_LOT << MSJ_LOT_VOLUME << values.vector[(int) values.size / 2]  << endl;
     else
         cout << MSJ_REJECT_LOT << endl;
 }
 
-int majorityElement()
+int majorityElement(vector_t &vector, int &tiebrakerVote)
 {
-	size_t majority, majorityOcurrences = 0;
-	
-	for (size_t j = 0; j < values.size; j++)
-	{
-		if (majorityOcurrences == 0)
-			majority = values.vector[j], majorityOcurrences = 1;
-			
-		else (majority == values.vector[j]) ? majorityOcurrences++ : majorityOcurrences--;
-	}
+    if(vector.size == 0)
+        return tiebrakerVote;
+    
+    if(vector.size % 2 != 0)
+        tiebrakerVote = vector.vector[vector.size - 1];
 
-	return majority;
+    size_t j = 0;
+	for (size_t i = 0; i < vector.size; i += 2) {
+        if(vector.vector[i] == vector.vector[i + 1])
+            vector.vector[j++] = vector.vector[i];
+	}
+    vector.size = j;
+
+	return majorityElement(vector, tiebrakerVote);
 }
 
 void processC(string path) {
-    int max = majorityElement();
+    vector_t list = values;
+    int tiebrakerVote;
+    int max = majorityElement(list, tiebrakerVote);
 
-    size_t quantityMax = 0;
+    size_t counterMax = 0;
 
     for(size_t i = 0; i < values.size; i++){
         if(values.vector[i] == max)
-            quantityMax++;
+            counterMax++;
     }
 
-    if(quantityMax > (int) values.size/2)
-        cout << MSJ_ACCEPT_LOT << endl;
+    if((counterMax > (int) values.size/2) ||
+        (counterMax == (int) values.size/2 && max == tiebrakerVote)) {
+        cout << MSJ_ACCEPT_LOT << MSJ_LOT_VOLUME << max << endl;
+    }
     else
         cout << MSJ_REJECT_LOT << endl;
 }
