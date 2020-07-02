@@ -1,0 +1,88 @@
+ \section{Un problema de ausentismo}
+ Una empresa de tercerización laboral nos convoca para que le ayudemos con un problema de ausentismo laboral. Tiene un conjunto de n empleados que realizan tareas en diferentes puntos de la ciudad. El turno de cada empleado i comienza en Ti(i) y termina en Tf(i) y durante todo ese lapso tiene que estar en la ubicación establecida. La dirección de la empresa sospecha que algunos de sus empleados suelen faltar sin aviso. Para verificarlo contrataron a la empresa “Dystopian Technologies Inc.” (DTI). Esta empresa implanta un microchip con un código único en cada empleado. Mediante rastreo satelital pueden conocer dónde se encuentra cada chip implantado en cualquier momento. Además posee el cronograma completo de las tareas.\newline
+ 
+ DTI brinda un sistema que mediante una consulta (encendido / apagado) nos devolverá cuáles empleados aún no controlados y en horario de trabajo se encuentran en su sitio y cuáles no.\newline
+%=============================================
+
+\subsection{Tipo de problema}
+El problema presentado pertenece a la familia de problemas \emph{Interval Scheduling}. El problema más famoso de esa familia es el del organizador de materias. \newline 
+
+En particular nuestro problema es una variante del \emph{Interval Partitioning Problem}, en donde en vez de ubicar la mayor cantidad de materias en la mínima cantidad de aulas debimos ubicar la mayor cantidad de turnos en la mínima cantidad de consultas.\newpage
+%=============================================
+
+\subsection{Algoritmo}
+El siguiente pseudocódigo se podrá utilizar para controlar que todos los empleados estén en sus puestos de trabajo en algún momento de su turno. \newline
+
+\begin{verbatim}
+    Declaro la clase Consulta con dos atributos, inicio y fin.
+    Creo una pila de para apilar objetos Consulta.
+    Creo una lista vacía donde almacenare a los empleados presentes
+    Creo una lista vacía donde almacenare a los empleados ausentes
+    Ordeno todos los turnos por su tiempo de comienzo.
+    Llamare T(1), T(2), . . . , T(n) a los turnos en orden.
+    
+    Creo la consulta(1) con inicio Ti(1) y fin Tf(1).
+    Apilo la consulta(1).
+    
+    Para j = 1, 2, 3, . . . , n:
+        Si el turno j se superpone la consulta del tope de la pila:
+            Desapilo la consulta.
+            Actualizo inicio y de fin con su intersección con el turno j.
+            Apilo la consulta.
+        Sino:
+            Creo una nueva consulta con el inicio y fin del turno j.
+            Apilo la consulta.
+        Fin si.
+    Fin para.
+    
+    Mientras la pila no este vacia:
+        Desapilo una consulta.
+        Llamo a DTI en un instante aleatorio entre el inicio y el fin de la consulta.
+        Agrego presentes a la lista de presentes.
+        Agrego ausentes a la lista de ausentes.
+    Fin Mientras.
+    
+\end{verbatim}
+\newpage
+%=============================================
+
+\subsection{Tipo de algoritmo}
+El algoritmo de la sección anterior es de tipo \emph{Greedy}. \newline
+
+Esto se debe a que su comportamiento sigue una heurística consistente en elegir la opción óptima en cada paso local con la esperanza de llegar a una solución general óptima. Esta es elegir el mejor tiempo posible para un turno dado abarcando la mayor cantidad de turnos de otros empleados en una consulta. \newline
+
+Además una vez que nuestro algoritmo toma una decisión jamas vuelve a ella para revisarla o modificarla, simplemente asume que es óptimo lo que hizo previamente y sigue iterando hasta solucionar el problema.\newline \newpage
+%=============================================
+
+\subsection{Complejidad del algoritmo}
+Para ver la complejidad de nuestro algoritmo vamos a analizar en detalle el pseudocódigo: \newline
+\newline
+\includegraphics[width=16cm]{"Imagenes/Parte1/complejidad_1".png}\newline
+\newline
+Por lo tanto el algoritmo sera $\mathcal{O}(n+n\log{n})$ = $\mathcal{O}(n\log{n})$ siendo n la cantidad de trabajadores de la empresa.\newline \newpage
+%=============================================
+
+\subsection{Solución óptima}
+Vamos a definir que nuestro algoritmo es óptimo si nos devuelve la asistencia de los empleados efectuando la cantidad mínima de consultas posible a DTI. Esto es que no exista otro algoritmo que devuelva un resultado correcto efectuando una menor cantidad de consultas a DTI.\newline
+\newline
+Nuestro algoritmo \emph{greedy} elige en cada paso el mejor tiempo posible para un turno dado abarcando la mayor cantidad de turnos de otros empleados en una consulta, llegando así al conjunto de consultas óptimo global.\newline
+\newline
+A continuación \textbf{vamos a demostrar que nuestra solución \emph{greedy} es óptima siguiendo el funcionamiento del algoritmo}:\newline
+\newline
+Comenzamos tomando el primer turno que consta de un tiempo inicial $t_{i}(1)$ y un tiempo final $t_{f}(1)$. Sabemos que este empleado debe figurar en el reporte de asistencia, por lo que vamos a buscar el mejor tiempo $t$ entre $t_{i}(1)$ y $t_{f}(1)$.\newline
+\newline
+Luego buscamos definir un $t$ que abarque a tantos turnos como sea posible. En este caso el ordenamiento inicial nos garantiza que si algún turno coincide en un algún instante con nuestro primer turno este será por lo menos el segundo. Para afirmar esto nos basamos en el siguiente principio: \emph{"si un empleado no se cruzó con ningún otro, entonces no se cruzó con el que llegó inmediatamente después de él"}.
+\begin{itemize}
+    \item Si no coinciden hacemos la consulta en cualquier instante dentro del primer turno y creamos una nueva consulta para el segundo. El hecho de que abarque a un solo turno no es un inconveniente ya que dicho turno se encuentra aislado del resto. La única forma de registrarlo es con una consulta particular.
+    \item Si coinciden reducimos nuestro rango de la consulta al de la intersección de los dos turnos.
+\end{itemize}
+Luego preguntamos por la intersección con el siguiente y repetimos el mismo razonamiento hasta terminar ubicar a todos los empleados en alguna consulta.\newline
+\newline
+Ahora bien, este escenario presenta la problemática de que quizás tenga elementos coincidentes con mi primer turno pero no con el rango de intersección, y por lo tanto puede haber un $t$ que abarque a más turnos que este. Sin embargo, este caso no nos quita la optimalidad del algoritmo; puesto que si bien no es el $t$ óptimo para nuestro primer turno, sí lo será para alguno de los empleados con los que se interceptó. Por lo tanto nuestro $t$ hallado es la mejor consulta posible para algún turno y, siguiendo el postulado de que igualmente dicho trabajador debía estar consultado al final del algoritmo, $t$ será un instante correcto para consultar.\newline
+\newline
+\includegraphics[width=13cm]{"Imagenes/Parte1/demostracion_optimo_1".png}\newline
+
+Por lo tanto al buscar siempre en cada paso un $t$ óptimo con este algoritmo, la cantidad de consultas sera mínima.\newline
+
+%=============================================
+

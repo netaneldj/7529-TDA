@@ -1,0 +1,44 @@
+\section{El productor agropecuario}
+Un productor agropecuario quiere maximizar su producción para su campo. Puede elegir entre n productos. Puede elegir 1 por trimestre. \newline
+
+Por otro lado, existe un estudio que indica que tipo de cultivos no deben ser consecutivos para evitar que se agote el suelo. En primer lugar no se puede repetir cultivos en trimestres consecutivos, pero además hay una restricción entre ciertos productos contiguos.\newline
+Son recomendaciones de tipo: Luego del producto A no se puede cultivar el producto B.
+%=============================================
+
+\subsection{Solución}
+Nuestra solución consiste en ir construyendo dinámicamente la lista de cultivos óptimos trimestre a trimestre. Partimos de los posibles cultivos del primer trimestre y en cada paso incorporamos para cada cultivo el óptimo de los nuevos cultivos.\newline 
+
+Al llegar al ultimo trimestre solamente debemos elegir la lista de cultivos de mayor ganancia.
+%=============================================
+
+\subsection{Subproblema}
+El subproblema en nuestro planteo es la elección de los cultivos óptimos para cada lista de cultivos en cada trimestre.
+%=============================================
+
+\subsection{Relación de recurrencia}
+\includegraphics[width=18cm]{"Imagenes/Parte 1/ecuacion".png}\newline
+\newline
+El arreglo \emph{anteriores\_permitidos} contiene la ganancia acumulada de los cultivos del anterior trimestre que el plantarlos antes no imposibilite plantar el cultivo i.
+%=============================================
+
+\subsection{Pseudocodigo}
+\includegraphics[width=18.5cm]{"Imagenes/Parte 1/pseudo".png}\newline
+%=============================================
+
+\subsection{Complejidad}
+\includegraphics[width=18.6cm]{"Imagenes/Parte 1/complejidad".png}\newline
+K: es la cantidad de lineas del archivo que contiene la informacion de los cultivos.\newline
+L: es la cantidad de lineas del archivo que contiene la informacion de las restricciones.\newline
+M: es la cantidad de cultivos maximos que hay por trimestre.\newline
+N: es la cantidad de trimestres a evaluar.\newline
+K esta acotada por N*M es decir que todos los trimestres contengan exactamente M cultivos. Asimismo L esta acotada por M*(M-1) siendo que todos los cultivos tengan una restricción con los otros.\newline
+De esta forma no afectan a la complejidad de nuestro algoritmo.
+%=============================================
+
+\subsection{Programa}
+Para poder ejecutar el archivo main.py se debe abrir la consola en el mismo directorio que el código fuente e ingresar:
+\begin{lstlisting}[language=bash]
+  $ python3 main.py cultivos.text restricciones.text
+\end{lstlisting}
+Donde \emph {cultivos.text} es el archivo de cultivos y \emph{restricciones.text} es el archivo con las restricciones para la rotación de cultivos. Los formatos de ambos archivos fueron detallados en el enunciado. \newline
+%=============================================

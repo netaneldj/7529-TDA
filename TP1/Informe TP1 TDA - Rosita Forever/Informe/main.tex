@@ -1,0 +1,72 @@
+%imports
+%=============================================================================================
+\documentclass[a4paper,12pt]{article}
+\usepackage[spanish, english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\graphicspath{ {Graficos/} }
+\usepackage{gensymb}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{pdfpages}
+\usepackage[export]{adjustbox}
+\usepackage{subfig}
+\usepackage{a4wide}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,bookmarksopen=true]{hyperref}
+%\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fancyvrb}
+\renewcommand*\ttdefault{txtt}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{helvet}
+\usepackage{lmodern}
+\usepackage{titlesec}
+
+%para el titulo de la tabla de contenidos
+%=============================================================================================
+\addto\captionsenglish{
+  \renewcommand{\contentsname}
+    {Indice}
+}
+%=============================================================================================
+
+
+
+%comienzo de documento
+%=============================================================================================
+\begin{document}
+\input{Informe/Secciones/caratula.tex}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\newpage
+
+%secciones
+%=============================================================================================
+\input{Informe/Secciones/introduccion.tex}
+\newpage
+
+\input{Informe/Secciones/parte1.tex}
+\newpage
+
+\input{Informe/Secciones/parte2.tex}
+\newpage
+
+\input{Informe/Secciones/conclusiones.tex}
+\newpage
+
+\input{Informe/Secciones/bibliografia.tex}
+\newpage
+
+\end{document}
+%=============================================================================================
