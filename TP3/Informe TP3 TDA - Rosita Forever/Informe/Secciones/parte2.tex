@@ -1,0 +1,22 @@
+\section{División de Bienes}
+
+Una de las parejas más ricas del mundo está pasando por un proceso de divorcio. Entre sus bienes cuentan con propiedades, autos, motos, estampillas raras y otros coleccionables. Como no se ponen de acuerdo en la manera de dividirlos, el juez ha dictaminado que un tasador ponga valor a cada bien y luego se haga una partición por valores iguales. El juez nos pide que elaboremos un algoritmo que en forma eficiente haga este trabajo.<<\newline
+%============================================
+
+\subsection{Solución}
+El problema que precede se puede pensar como una representación de un conjunto
+
+$C=\{w_{1}, w_{2}, ..., w_{n}\}$ donde cada $w_{i}$ está asociado al precio de cada bien. Luego, se desea determinar si existe un subconjunto de C tal que:
+
+\begin{equation}
+    W=\sum w_{i}
+\end{equation}
+
+Donde $w_{i}$ representa el precio de cada bien.
+
+Utilizando conceptos de programación dinámica es posible llegar a una solución. No obstante, dicha solución estaría caracterizada por ser $O(W\cdot n)$, donde n es la cantidad de bienes y W es el valor de la ecuación (1) al que se desea llegar. Esto puede llegar a ser de orden casi exponencial si considera un W muy grande, y se tiene en cuenta la cantidad de bits empleados para representarlo y su crecimiento.
+
+Sin embargo, como se describirá en el siguiente apartado, el problema es NP-Completo, de manera que no es posible hallar una solución que no sea exponencial. Al menos así ha sido descripto hasta ahora.
+
+\subsection{Demostración NP-C}
+%=============================================
