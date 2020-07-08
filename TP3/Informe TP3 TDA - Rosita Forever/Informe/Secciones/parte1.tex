@@ -53,15 +53,8 @@ Sea el grafo $M = (V', E')$ donde $V' = V \cup \{ x_{u,v} \, : \, (u,v) \in E \}
 
 Para cada $u \in V$ siendo $v_1, v_2, \dots, v_m$ los vecinos de $u$ en $G$ y definamos la ruta $P_u = \langle u, x_{u,v_1}, x_{u,v_2}, \dots, x_{u,v_m} \rangle⟩$ en $M$. Siendo $\mathcal{P} = \{P_u \, : \, u \in V\}$.\newline
 
-Hay un conjunto independiente de tamaño como máximo $k$ en $G$, si y solo si hay un subconjunto $\mathcal{P}'$ con $|\mathcal{P}'| \le k$ tal que los caminos en $\mathcal{P}'$ son vértices disjuntos de a pares.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{Informe/Imagenes/Parte1/grafico 4.png}
-\caption{\label{fig:class01}Nodos independientes}
-\end{figure}
-
-Más precisamente, si $S$ es un conjunto independiente de $G$, entonces $\{ P_u \, : \, u \in S \}$ es una colección de caminos separados de vértices por pares en $M$ y, si $\mathcal{P}'$ es una colección de caminos separados de vértices por pares en $M$, entonces $\{u \, : \, P_u \in \mathcal{P}' \}$ es un conjunto independiente de $G$.
+Hay un conjunto independiente de tamaño como máximo $k$ en $G$, si y solo si hay un subconjunto $\mathcal{P}'$ con $|\mathcal{P}'| \le k$ tal que los caminos en $\mathcal{P}'$ son vértices disjuntos. \newline
+Para visualizarlo, construimos los siguientes Paths en M: 
 
 \begin{figure}[H]
 \centering
@@ -69,10 +62,20 @@ Más precisamente, si $S$ es un conjunto independiente de $G$, entonces $\{ P_u 
 \caption{\label{fig:class01}Rutas}
 \end{figure}
 
+Ahora queda formado un $\mathcal{P}'$ =  \{ P1; P3; P4 \} con $|\mathcal{P}'| = 3$ que representa en nuestro grafo G:
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{Informe/Imagenes/Parte1/grafico 5.png}
-\caption{\label{fig:class01}Demostración NP-Completo}
+\includegraphics[width=0.9\textwidth]{Informe/Imagenes/Parte1/grafico 4.png}
+\caption{\label{fig:class01}Nodos Independientes}
+\end{figure}
+
+Más precisamente, si $S$ es un conjunto independiente de $G$, entonces $\{ P_u \, : \, u \in S \}$ es una colección de caminos separados de vértices $M$ y, si $\mathcal{P}'$ es una colección de caminos separados de vértices en $M$, entonces $\{u \, : \, P_u \in \mathcal{P}' \}$ es un conjunto independiente de $G$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.148\textwidth]{Informe/Imagenes/Parte1/grafico 5.png}
+\caption{\label{fig:class01} Vista General}
 \end{figure}
 %=============================================
 
