@@ -17,13 +17,13 @@ Para demostrar que el problema es $\mathsf{NP}$ debemos poder corroborar la solu
 A continuación se propone un algoritmo que verifica la solución propuesta en tiempo polinomial:
 
 \begin{verbatim}
-Llamar manifestaciones a la lista de manifestaciones(representadas por tuplas de nodos)
+Llamar L a la lista de manifestaciones(representadas por tuplas de nodos)
 
-Funcion esManifestacionValida(manifestaciones):
+Funcion esManifestacionValida(L):
     Llamar visitados a la lista que contendrá a los nodos visitados
     
     visitados es lista vacia
-    Para cada manifestacion en manifestaciones:
+    Para cada manifestacion en L:
         Para cada esquina en manifestacion:
             Si esquina en visitados:
                 Devolver falso
