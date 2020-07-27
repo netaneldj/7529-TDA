@@ -1,0 +1,53 @@
+\section{Anexo Un poco de teoría}
+%=============================================
+\subsection{Definiciones}
+\subsubsection{Problemas P y NP}
+Un problema P es todo aquel problema de decisión que se puede resolver eficientemente (es decir, en tiempo polinomial), mientras que un problema NP es el que, contando con una posible solución del mismo, ésta se puede verificar eficientemente.\\
+
+\subsection{NP-completo y NP-hard}
+Si todo problema NP se puede reducir al problema A, A es un problema NP-hard. Y los NP-complete son aquellos problemas NP-hard que además son NP.\\
+
+\subsection{Complejidad}
+Si quisiéramos ordenar estos problemas de menor a mayor complejidad, en términos generales: 
+\begin{itemize}
+    \item P
+    \item NP
+    \item NP-Completo
+    \item NP-Hard
+\end{itemize}
+
+\subsection{Ejemplos}
+\begin{itemize}
+    \item Problema P, NP: Camino más corto.
+    \item Problema NP-completo: Problema de la mochila.
+    \item Problema NP-hard: Problema de la parada.
+\end{itemize}
+
+%=============================================
+
+\subsection{Problema}
+Tenemos un problema A, un problema B y una caja negra NA y NB que resuelven el problema A y B respectivamente. Sabiendo que B es NP
+%=============================================
+\subsubsection{I}
+Qué podemos decir de A si utilizamos NA para resolver el problema B (asumimos que la reducción realizada para adaptar el problema B al problema A es polinomial)\newline
+
+Podemos decir que A es igual o menos complejo que B.
+%=============================================
+\subsubsection{II}
+Qué podemos decir de A si utilizamos NB para resolver el problema A (asumimos que la reducción realizada para adaptar el problema A al problema B es polinomial)\newline
+¿Por qué no podemos decir nada de A? ¿A quién le podemos pasar? ¿A qué clases puede (y no puede) pertenecer A? ¿Cómo es la relación de A con respecto a B?\newline
+
+Ya que A se puede resolver con NB sabemos que no es un problema mas complejo que NP. Sin embargo A puede pertenecer a cualquier complejidad menor a NP porque el que lo podamos resolver como  resolveriamos un problema NP no significa que no exista un metodo mas simple y de menor complejidad algoritmica para llegar al mismo resultado. Lo que si podemos asegurar es que A es de igual o menor complejidad que B.
+
+%=============================================
+
+\subsubsection{III}
+Qué pasa con los puntos anteriores si no conocemos la complejidad de B, pero sabemos que A es P?\newline
+Si “no necesariamente B se resuelve de forma polinómica”, ¿a qué clases puede pertenecer?
+
+\begin{enumerate}
+    \item Decimos que A es igual o más complejo que B y ambos se pueden resolver de forma polinómica.
+    \item Decimos que B es igual o más complejo que A y no necesariamente B se resuelve de forma polinómica. B podría pertenecer a NP (o mayor) y que utilicemos un algoritmo de mayor complejidad para resolver un problema P.
+\end{enumerate}
+%=============================================
+

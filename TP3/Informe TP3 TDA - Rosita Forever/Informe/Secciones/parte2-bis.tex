@@ -1,0 +1,75 @@
+\section{Anexo División de Bienes}
+
+Una de las parejas más ricas del mundo está pasando por un proceso de divorcio. Entre sus bienes cuentan con propiedades, autos, motos, estampillas raras y otros coleccionables. Como no se ponen de acuerdo en la manera de dividirlos, el juez ha dictaminado que un tasador ponga valor a cada bien y luego se haga una partición por valores iguales. El juez nos pide que elaboremos un algoritmo que en forma eficiente haga este trabajo.\newline
+%============================================
+
+El pedido se puede plantear como un problema \textit{NUMBER-PARTITION}; dado un conjunto $C=\{w_{1}, w_{2}, ..., w_{n}\}$, donde cada $w_{i}$ está asociado al precio de cada bien, se desea determinar si existe un subconjunto W de C tal que la suma de sus elementos equivalga a la suma de los elementos restantes en C.
+
+\begin{equation}
+    \sum_{w\in W} w  = \sum_{w\in\overline{W}} w
+\end{equation}
+
+Para que un problema X sea NP-Completo, debe cumplirse que: \\
+(1) $X$ sea NP\\
+(2) cualquier problema NP-Completo $Y$ puede reducirse a $X$, en tiempo polinomial\\
+(3) $X$ tenga una solución si y sólo si $Y$ tiene solución
+
+\subsection{Demostración NP}
+
+Corroborar que dos particiones de un conjunto sean solución de este problema es muy simple.  Sólo hay que verificar que la suma total de sus elementos sea equivalente. 
+Por lo tanto, verificarlo es $\mathcal{O}(n)$, siendo n la cantidad de elementos del subconjunto más poblado. 
+Entonces, al poder verificar la solución en tiempo polinomial, se puede asegurar que este problema es NP.
+
+\subsection{Reducción del problema SUBSET-SUM}
+Un conocido problema NP-Completo es el problema de la suma de los subconjuntos. 
+Éste se puede describir como: Dado un conjunto de enteros $A$, ¿existe un subconjunto $S \subset A$, tal que la suma de sus elementos sea exactamente $k$?
+
+En términos matemáticos:
+
+\begin{gather*}
+    A = \{w_{1}, w_{2}, ..., w_{n}\}, \sum_{w \in A} w_{i} = s \\
+    \exists S \subset A  / \sum_{w \in S} w_{i} = k ?
+\end{gather*}
+Lo que se desea corroborar ahora es si \textit{SUBSET-SUM} $ \leq_{p} $ \textit{NUMBER-PARTITION}.
+A tales efectos, se procederá a adaptar el problema \textit{SUBSET-SUM} para que sea resoluble a través de \textit{NUMBER-PARTITION}. 
+
+Sea $s$ la suma de los miembros de $A$ y $A' = A \cup \{s-2k\}$ un conjunto definido, donde k es el valor objetivo previamente mencionado. Se aceptará que $A$ tiene solución si y sólo si \textit{NUMBER-PARTITION} acepta $A'$.
+
+\begin{equation}
+    A' = \{w_{1}, w_{2}, ..., w_{n}, s-2k\}, \sum_{w \in A'} = s + (s-2k) = 2s-2k
+\end{equation}
+
+Se desea probar que
+$\{A,k\}$ $\in $ \textit{SUBSET-SUM} $\Leftrightarrow$ $\{A'\}$ $\in$ \textit{NUMBER-PARTITION}. Se hará esto en ambos sentidos.
+
+\subsubsection{$\{A,k\}$ $\in $ \textit{SUBSET-SUM} $\Rightarrow$ $\{A'\}$ $\in$ \textit{NUMBER-PARTITION}}
+ Si existe un conjunto de números en $A$ que sumen $k$, entonces el resto de los números sumarán $s-k$. 
+\begin{gather*}
+    S \subset A  / \sum_{w \in S} w = k \\
+    \Rightarrow \sum_{w \in \overline{S}_{A}} w = \sum_{w \in A} w - \sum_{w \in S}w = s - k\\
+\end{gather*}
+Se llamará $\overline{S}$ al complemento de S en A. Entonces, es posible descomponer $A'$ de la siguiente forma (haciendo abuso de notación, pues $A$ y $A'$ son conjuntos casi idénticos).
+    \begin{equation*}
+    \begin{split}
+        A' &= A \cup  \{s-2k\} \\
+            &= \{\overline{S} \cup S\} \cup \{s-2k\} \\
+            &= \overline{S}  \cup \{ S \cup \{s-2k\}\} \\
+            &= B \cup \overline{B}_{A'}\\\              
+    \end{split}
+    \end{equation*}
+Como $B \equiv \overline{S}$, la suma de sus elementos es "$s-k$". Luego, es posible calcular cuánto suma el conjunto de números restantes en A' (complemento de $B$ en $A'$).
+    \begin{equation*}
+    \begin{split}
+    \sum_{w \in \overline{B}_{A'}} w & = \sum_{w \in A'} w - \sum_{w \in B} w \\
+                            & =  2s-2k - (s-k) = s - k
+    \end{split}
+    \end{equation*}
+    
+Por lo tanto, existe una partición en dos de $A'$ ($B$ y $\overline{B}_{A'}$) tal que cada conjunto sume "$s-k$" (exactamente la mitad de la suma total de $A'$). 
+
+\subsubsection{$\{A,k\}$ $\in $ \textit{SUBSET-SUM} $\Leftarrow$ $\{A'\}$ $\in$ \textit{NUMBER-PARTITION}} 
+Si existe una partición en dos de $A'$ tal que cada una sume $s-k$ (la mitad de su suma), entonces una de ellas necesariamente contiene el número $s-2k$ que se agregó previamente. Al descartar del conjunto este valor, se obtiene un subconjunto de $A'$ cuya suma sea $k$.
+
+\subsubsection{Corolario}
+Un problema NP-Completo, como lo es el SUBSET-SUM, es reducible al problema del enunciado, NUMBER-PARTITION. Esta reducción es claramente en tiempo polinomial; para adaptar el conjunto "de entrada" sólo hay que incluir un valor (s-2k) para que pueda ser resuelto como una instancia de NUMBER-PARTITION. Además, para adaptar su salida sólo habría que identificar la partición con el valor que se agregó y descartarlo.\\
+Teniendo todo esto en cuenta, se cumplen las 3 condiciones enunciadas y queda demostrado que NUMBER-PARTITION es NP-Completo porque, para poder resolverlo, se debe resolver el problema SUBSET-SUM, que es NP-completo.
