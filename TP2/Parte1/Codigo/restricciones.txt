@@ -1,3 +1,4 @@
 Cebada, Maiz
 Arroz, Trigo
 Tomate, Papa
+Cebada, Arroz
